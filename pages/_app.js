@@ -4,7 +4,17 @@ import Navbar from "@/components/Navbar"
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import Head from 'next/head'
+import LoadingSpinner from '@/components/LoadingSpinner'
+import { useEffect, useState } from 'react'
 export default function App({ Component, pageProps }) {
+  const [show,setShow] = useState(true)
+  const [show1,setShow1] = useState(false)
+  useEffect(()=>{
+    setTimeout(() => {
+      setShow(false)
+      setShow1(true)
+    }, 3000);
+  },[])
   return (
     <>
     <Provider store={store}>
@@ -17,8 +27,23 @@ export default function App({ Component, pageProps }) {
         ></link>
       </Head>
     <div className="font background-body">
+      {
+        show == true?    <div style={{
+          textAlign:'center',
+          position:'relative',
+          top:'50vh'
+        }}>
+        <LoadingSpinner />
+        </div> :null
+      }
+     
+
+      {show1 == true?
+      <div>
     <Navbar />  
     <Component {...pageProps} />
+      </div>:null
+      }
     </div>
     </Provider>
 

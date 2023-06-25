@@ -52,7 +52,9 @@ function Navbar1() {
               ></Image>
             </Link>
           </div>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Toggle aria-controls="basic-navbar-nav" style={{
+            backgroundColor:'#d94242'
+          }} />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <div className="nav-link ">
