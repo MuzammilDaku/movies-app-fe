@@ -1,0 +1,56 @@
+.font{
+  font-family: 'Open Sans', sans-serif;}
+.color-fe{
+  color: #fefefe;
+}
+.input-search:focus{
+outline: red;
+}
+html {
+  background-color: #233040;
+  height: 100vh;
+}
+body{
+  background-color: #233040;
+
+}
+.background-body{
+  background-color: #233040;
+
+}
+/* .hover-button:hover{
+  width: 55px;
+  height: 55px;
+  background-image: url('/public/assets/icons/btn-overlay-red.png');
+  background-position: 50% 25%;
+  background-size: cover;
+  opacity: 12%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -27.5px;
+  margin-left: -27.5px;
+} */
+a:link{
+  text-decoration: none;
+}
+
+.hide{
+  /* display: none; */
+  position: relative;
+  top: -15rem;
+  left: 1.6rem;
+  opacity: 50%;
+}
+
+.default-button{
+  background-color: #da283b;
+  border: 1px solid #da283b;
+  color: #fefefe;
+  height: 4rem;
+  width: 19rem;
+  border-radius: 8px;
+}
+.default-button:hover{
+  background-color: #ca3443;
+}
