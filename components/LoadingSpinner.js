@@ -4,7 +4,6 @@ const LoadingSpinner = () => {
   return (
     <>
     <ScaleLoader speedMultiplier={3} color="#cf2d2d" />
-
     </>
   )
 }

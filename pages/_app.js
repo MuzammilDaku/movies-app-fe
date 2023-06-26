@@ -1,6 +1,7 @@
 import '@/styles/globals.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import Navbar from "@/components/Navbar"
+import Footer from '@/components/Footer'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import Head from 'next/head'
@@ -36,14 +37,23 @@ export default function App({ Component, pageProps }) {
         <LoadingSpinner />
         </div> :null
       }
+      {
+        show1 == true ? 
+        <div>
+        <Navbar />  
+        <Component {...pageProps} />
+        <div style={{
+          marginTop:'120px'
+        }}>
+        <Footer />
+        </div>
+        </div> :null
+      }
      
 
-      {show1 == true?
-      <div>
-    <Navbar />  
-    <Component {...pageProps} />
-      </div>:null
-      }
+      
+   
+      
     </div>
     </Provider>
 

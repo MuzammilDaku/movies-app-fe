@@ -4,7 +4,10 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
 const index = () => {
+  
   const [AllMovies,setAllMovies] = useState([])
+  const [isHovering, setIsHovering] = useState(false);
+  
   useEffect(() => {
     const fetchSouthIndianMovies = async () => {
       const res = await axios.get("http://localhost:5000/movies");
@@ -12,9 +15,7 @@ const index = () => {
     };
     fetchSouthIndianMovies();
   }, []);
-
-
-  const [isHovering, setIsHovering] = useState(false);
+ 
   const handleMouseOver = () => {
     setIsHovering(true);
   };
@@ -26,7 +27,15 @@ const index = () => {
   const handleCardClick = (title) => {
     router.push(`/movies/${title}`);
   };
-
+ // Pagination Logic
+ const [currentPage,setCurrentPage] = useState(1)
+ const ITEMS_PER_PAGE = 20
+ const totalPages = Math.ceil(AllMovies.length/ITEMS_PER_PAGE)
+ const startIndex = (currentPage-1)*ITEMS_PER_PAGE
+ const endIndex = startIndex+ITEMS_PER_PAGE
+ const handlePageChange =(page)=>{
+  setCurrentPage(page)
+ }
   return (
     <>
       <Head>
@@ -49,7 +58,7 @@ const index = () => {
           <h3 className="fw-lighter">Featured Movies</h3>
         </div>
         <div className="cards row justify-content-center">
-          {AllMovies?.map((e, index) => {
+          {AllMovies.slice(startIndex,endIndex).map((e, index) => {
             return (
               <>
                 <div
@@ -103,6 +112,12 @@ const index = () => {
               </>
             );
           })}
+          <div className="pagination justify-content-center">
+          {Array.from({ length: totalPages }, (_, i) => i +1).map((page) => (
+       <li class="page-item"><button class="page-link" key={page} onClick={() => handlePageChange(page)}>{page}</button></li>
+
+  ))}
+          </div>
         </div>
       </div>
     </>
