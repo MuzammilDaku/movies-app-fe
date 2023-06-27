@@ -38,8 +38,8 @@ export default function App({ Component, pageProps }) {
         </div> :null
       }
       {
-        show1 == true ? 
-        <div>
+        show1 == true ?
+         <div>
         <Navbar />  
         <Component {...pageProps} />
         <div style={{

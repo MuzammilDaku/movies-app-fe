@@ -1,8 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
-import movieReducer from'./movieFilter/movieSlice'
-
+import movieFilterSliceReducer from './movieFilter/movieFilterSlice'
 export const store = configureStore({
   reducer: {
-    searchFilter:movieReducer
+    movieFilter:movieFilterSliceReducer
   },
 })

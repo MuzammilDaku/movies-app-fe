@@ -1,38 +1,55 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { setSearchQuery, filterMovies } from "@/redux/movieFilter/movieSlice";
+import { useRouter } from "next/router";
+import {
+  faChessKing,
+  faMagnifyingGlass,
+} from "@fortawesome/free-solid-svg-icons";
+import {
+  setAllMovies,
+  setSearchQuery,
+  filterMovies,
+} from "@/redux/movieFilter/movieFilterSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { setAllMovies } from "@/redux/movieFilter/movieSlice";
-import DropdownMenu from "./DropDownMenu";
 function Navbar1() {
-  useEffect(()=>{
-    const fetchSouthIndianMovies = async()=>{
-    const res = await axios.get('http://localhost:5000/movies')
-    console.log(res.data)
-   await dispatch(setAllMovies(res.data))
-   
-    }
-    fetchSouthIndianMovies()
-   },[])
+  const [showFilter,setShowFilter] = useState(false)
+  const filterData =
+    useSelector((state) => state.movieFilter.filteredMovies) || [];
+  // console.log("filterData", filterData);
   const dispatch = useDispatch();
-  const searchQuery = useSelector((state) => state.searchFilter.searchQuery);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+  useEffect(() => {
+    const getData = async () => {
+      await axios.get("http://localhost:5000/movies").then((res) => {
+        const action = setAllMovies(res.data);
+        dispatch(action);
+      });
+    };
+    getData();
+  }, []);
+  const router = useRouter();
+  const handleCardClick = (title) => {
+    router.push(`/movies/${title}`);
   };
 
   const searchInput = (e) => {
     const value = e.target.value;
-    dispatch(setSearchQuery(value));
-    dispatch(filterMovies());
+    console.log(value);
+    if (value == "") {
+      setShowFilter(false)
+    } else {
+      setShowFilter(true)
+      const action = setSearchQuery(value);
+      dispatch(action);
+      dispatch(filterMovies());
+    }
   };
+
   return (
     <>
       <Navbar
@@ -52,9 +69,12 @@ function Navbar1() {
               ></Image>
             </Link>
           </div>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" style={{
-            backgroundColor:'#d94242'
-          }} />
+          <Navbar.Toggle
+            aria-controls="basic-navbar-nav"
+            style={{
+              backgroundColor: "#d94242",
+            }}
+          />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <div className="nav-link ">
@@ -80,7 +100,7 @@ function Navbar1() {
             </Nav>
             <input
               type="search"
-              className="input-search px-3"
+              className="input-search px-3 "
               onChange={searchInput}
               placeholder="Search Here"
               style={{
@@ -92,7 +112,7 @@ function Navbar1() {
                 borderRadius: "8px",
               }}
             />
-            {isDropdownOpen && searchQuery && <DropdownMenu />}
+
             <FontAwesomeIcon
               icon={faMagnifyingGlass}
               height={20}
@@ -103,9 +123,76 @@ function Navbar1() {
                 right: "1.8rem",
               }}
             />
+      
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      <div className=" container">
+      
+        {showFilter ?   <>
+        <div
+          className=" text-center my-3 col-12"
+          style={{
+            backgroundColor: "#da283b",
+            width: "15rem",
+            height:'2.5rem',
+            color: "#fefefe",
+            border: "1px solid #da283b",
+            borderRadius: "3px",
+          }}
+        >
+          <h3 className="fw-lighter">Search Results</h3> 
+          
+        </div> 
+        <div className="row">
+        
+        
+          {filterData.map((e, index) => {
+            return (
+              <>
+
+                <div
+                  className="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-5 my-3"
+               
+                  key={index}
+                  style={{
+                    height: "15rem",
+                  }}
+                >
+                  <Link href={`/movies/${e.title}`}>
+                    <div onClick={() => handleCardClick(e.title)}>
+                      <img
+                        src={e.img}
+                        style={{
+                          height: "14rem",
+                          width: "100%",
+                          borderRadius: "7px",
+                        }}
+                        alt="Movie Thumbnail"
+                      />
+                      <p
+                        className="color-fe text-center text-decoration-none"
+                        style={{
+                          position: "relative",
+                          top: "-3rem",
+                        }}
+                      >
+                        {e.title}
+                      </p>
+                      
+                    </div>
+                  </Link>
+                </div>
+              </>
+            );
+          })}
+          </div>
+        </>:null}
+     
+      </div>
+
+     
+     
     </>
   );
 }
