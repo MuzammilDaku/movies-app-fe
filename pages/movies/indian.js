@@ -4,6 +4,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 const IndianMovies = () => {
+ 
   const router= useRouter()
   const handleCardClick = (title) =>{
    router.push(`/movies/${title}`)
@@ -30,7 +31,15 @@ const IndianMovies = () => {
   const handleMouseOut = () => {
     setIsHovering(false);
   };
- 
+  // Pagination Logic
+  const [currentPage,setCurrentPage]= useState(1)
+  const ITEMS_PER_PAGE = 30
+  const totalPages = Math.ceil(indianMovies.length/ITEMS_PER_PAGE)
+  const startIndex = (currentPage-1)*ITEMS_PER_PAGE
+  const endIndex = startIndex+ITEMS_PER_PAGE
+  const handlePageChange = (page) =>{
+    setCurrentPage(page)
+  }
   return (
     <>
     <div className="container my-3">
@@ -45,7 +54,7 @@ const IndianMovies = () => {
         <h3 className='fw-lighter'>Indian Movies</h3>
     </div>
     <div className="cards row justify-content-center">
-    {indianMovies?.map((e,index)=>{
+    {indianMovies?.slice(startIndex,endIndex).map((e,index)=>{
     return(
       <>
         <div className="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-5 my-3" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}  key={index} style={{
@@ -94,6 +103,17 @@ const IndianMovies = () => {
       </>
     )
    })}
+      <div className="pagination justify-content-center">
+             {Array.from({length:totalPages},(_,i)=>i+1).map((e)=>{
+              return (
+                <>
+                <li className='page-item'>
+                  <button className='page-link'onClick={()=>handlePageChange(e)} key={e}>{e}</button>
+                </li>
+                </>
+              )
+             })}
+          </div>
     </div>
     
     </div>

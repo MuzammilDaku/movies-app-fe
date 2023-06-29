@@ -15,7 +15,7 @@ import {
   setAllMovies,
   setSearchQuery,
   filterMovies,
-} from "@/redux/movieFilter/movieFilterSlice";
+} from "@/redux/AllMovieFilter/movieFilterSlice";
 import { useDispatch, useSelector } from "react-redux";
 function Navbar1() {
   const [showFilter,setShowFilter] = useState(false)
