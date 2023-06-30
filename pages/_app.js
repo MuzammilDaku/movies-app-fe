@@ -7,15 +7,18 @@ import { store } from '@/redux/store'
 import Head from 'next/head'
 import LoadingSpinner from '@/components/LoadingSpinner'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 export default function App({ Component, pageProps }) {
-  const [show,setShow] = useState(true)
-  const [show1,setShow1] = useState(false)
-  useEffect(()=>{
-    setTimeout(() => {
-      setShow(false)
-      setShow1(true)
-    }, 3000);
-  },[])
+  const router = useRouter()
+  const renderNavbarAndFooter = !router.pathname.includes('auth/')
+  const [show,setShow] = useState(false)
+  const [show1,setShow1] = useState(true)
+  // useEffect(()=>{
+  //   setTimeout(() => {
+  //     setShow(false)
+  //     setShow1(true)
+  //   }, 3000);
+  // },[])
   return (
     <>
     <Provider store={store}>
@@ -37,9 +40,14 @@ export default function App({ Component, pageProps }) {
         <LoadingSpinner />
         </div> :null
       }
-      {
-        show1 == true ?
-         <div>
+        
+        
+     
+        {show1 == true ? (
+          <div>
+            {renderNavbarAndFooter && (
+              <>
+               <div>
         <Navbar />  
         <Component {...pageProps} />
         <div style={{
@@ -47,10 +55,12 @@ export default function App({ Component, pageProps }) {
         }}>
         <Footer />
         </div>
-        </div> :null
-      }
-     
-
+        </div>
+              </>
+            )}
+            {!renderNavbarAndFooter &&  <Component {...pageProps} />}
+          </div>
+          ):null}
       
    
       

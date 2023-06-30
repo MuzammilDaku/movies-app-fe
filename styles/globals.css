@@ -62,3 +62,65 @@ a:link{
 a:hover{
   color: rgb(218, 40, 59);
 }
+.box{
+  text-align: center;
+  align-self: center;
+  background-color: #ca3443;
+  filter: drop-shadow(11px 3px 10px rgb(179, 71, 71));
+  border-radius: 12px;
+}
+.login-input{
+  outline: none;
+  background-color: #ca3443;
+  border: none;
+  border-bottom: 1px solid #233040;
+  color: #fefefe;
+}
+.login-input::placeholder{
+  color: #fefefe;
+  position: relative;
+  right: 2rem;
+ 
+
+}
+.login-input:focus{
+ border-bottom: 1px solid #fefefe;
+}
+.btn-login{
+  color: #fefefe;
+  background-color: #233040;
+  border: 1px dashed #233040;
+  padding: 6px 100px;
+  border-radius: 20px;
+  
+}
+.btn-login:hover{
+  background-color: #263344;
+}
+.btn-fb{
+  color: #fefefe;
+  border: 1px solid #233040;
+  border-radius: 11px;
+  background-color: #233040;
+  padding-top: 0.4rem;
+  padding-bottom: 0.7rem;
+  padding-left: 1.3rem;
+  padding-right: 1.3rem;
+}
+.btn-fb:hover{
+  background-color: #ca3443;
+  color: #233040;
+}
+.fb{
+  height: 20px;
+}
+.fb-text{
+  position: relative;
+  top: 0.1rem;
+  left: 0.4rem;
+  
+}
+
+.vh-100{
+  height: 100vh;
+}
